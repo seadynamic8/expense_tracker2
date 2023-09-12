@@ -19,7 +19,7 @@ class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
-  Category? _selectedCategory;
+  Category _selectedCategory = Category.leisure;
 
   void _selectDate(pickedDate) {
     setState(() {
@@ -39,10 +39,7 @@ class _NewExpenseState extends State<NewExpense> {
     final isAmountInvalid = enteredAmount == null || enteredAmount <= 0;
 
     // Validation
-    if (enteredTitle.isEmpty ||
-        isAmountInvalid ||
-        _selectedDate == null ||
-        _selectedCategory == null) {
+    if (enteredTitle.isEmpty || isAmountInvalid || _selectedDate == null) {
       _showDialog();
       return;
     }
@@ -52,7 +49,7 @@ class _NewExpenseState extends State<NewExpense> {
         title: enteredTitle,
         amount: enteredAmount,
         date: _selectedDate!,
-        category: _selectedCategory!,
+        category: _selectedCategory,
       ),
     );
     Navigator.pop(context);
@@ -101,7 +98,9 @@ class _NewExpenseState extends State<NewExpense> {
           ),
           Row(
             children: [
-              CategoryDropdown(selectCategory: _selectCategory),
+              CategoryDropdown(
+                  selectedCategory: _selectedCategory,
+                  selectCategory: _selectCategory),
               const Spacer(),
               Row(
                 children: [

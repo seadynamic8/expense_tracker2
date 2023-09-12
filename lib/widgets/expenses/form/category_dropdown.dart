@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:expense_tracker2/models/expense.dart';
 
 class CategoryDropdown extends StatefulWidget {
-  const CategoryDropdown({super.key, required this.selectCategory});
+  const CategoryDropdown({
+    super.key,
+    required this.selectedCategory,
+    required this.selectCategory,
+  });
 
+  final Category selectedCategory;
   final void Function(Category) selectCategory;
 
   @override
@@ -12,7 +17,13 @@ class CategoryDropdown extends StatefulWidget {
 }
 
 class _CategoryDropdownState extends State<CategoryDropdown> {
-  Category _selectedCategory = Category.leisure;
+  Category? _selectedCategory;
+
+  @override
+  void initState() {
+    _selectedCategory = widget.selectedCategory;
+    super.initState();
+  }
 
   void _changeCategory(value) {
     if (value == null) return;
@@ -20,7 +31,8 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
     setState(() {
       _selectedCategory = value;
     });
-    widget.selectCategory(_selectedCategory);
+
+    widget.selectCategory(_selectedCategory!);
   }
 
   @override
