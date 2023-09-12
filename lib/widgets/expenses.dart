@@ -40,9 +40,18 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void _removeExpense(Expense expense) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     setState(() {
       _registeredExpenses.remove(expense);
     });
+
+    scaffoldMessenger.clearSnackBars();
+    scaffoldMessenger.showSnackBar(
+      const SnackBar(
+        content: Text('Expense deleted.'),
+      ),
+    );
   }
 
   @override
