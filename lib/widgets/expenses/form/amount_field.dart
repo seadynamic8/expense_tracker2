@@ -12,6 +12,7 @@ class AmountField extends StatelessWidget {
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
         label: Text('Amount'),
+        prefixText: '\$',
       ),
     );
   }
