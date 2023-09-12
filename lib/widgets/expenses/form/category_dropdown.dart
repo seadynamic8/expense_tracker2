@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+
+import 'package:expense_tracker2/models/expense.dart';
+
+class CategoryDropdown extends StatefulWidget {
+  const CategoryDropdown({super.key, required this.selectCategory});
+
+  final void Function(Category) selectCategory;
+
+  @override
+  State<CategoryDropdown> createState() => _CategoryDropdownState();
+}
+
+class _CategoryDropdownState extends State<CategoryDropdown> {
+  Category _selectedCategory = Category.leisure;
+
+  void _changeCategory(value) {
+    if (value == null) return;
+
+    setState(() {
+      _selectedCategory = value;
+    });
+    widget.selectCategory(_selectedCategory);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+      value: _selectedCategory,
+      items: Category.values
+          .map(
+            (category) => DropdownMenuItem(
+              value: category,
+              child: Text(
+                category.name.toUpperCase(),
+              ),
+            ),
+          )
+          .toList(),
+      onChanged: _changeCategory,
+    );
+  }
+}
