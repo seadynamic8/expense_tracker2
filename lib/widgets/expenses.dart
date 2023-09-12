@@ -41,11 +41,16 @@ class _ExpensesState extends State<Expenses> {
 
   void _removeExpense(Expense expense) {
     final expenseIndex = _registeredExpenses.indexOf(expense);
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
 
     setState(() {
       _registeredExpenses.remove(expense);
     });
+
+    _showNotificationAndUndoBar(expense, expenseIndex);
+  }
+
+  void _showNotificationAndUndoBar(Expense expense, int expenseIndex) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
 
     scaffoldMessenger.clearSnackBars();
     scaffoldMessenger.showSnackBar(
