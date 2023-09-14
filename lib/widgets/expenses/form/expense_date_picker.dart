@@ -38,6 +38,7 @@ class _ExpenseDatePickerState extends State<ExpenseDatePicker> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(_selectedDate == null
             ? 'No date selected'

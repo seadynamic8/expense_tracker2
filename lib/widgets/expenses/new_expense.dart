@@ -82,47 +82,104 @@ class _NewExpenseState extends State<NewExpense> {
   Widget build(BuildContext context) {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
 
-    return Padding(
-      padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
-      child: Column(
-        children: [
-          TitleField(titleController: _titleController),
-          Row(
-            children: [
-              Expanded(
-                child: AmountField(amountController: _amountController),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              Expanded(
-                child: ExpenseDatePicker(selectDate: _selectDate),
-              ),
-            ],
+    return LayoutBuilder(builder: (ctx, constraints) {
+      final width = constraints.maxWidth;
+
+      return SizedBox(
+        height: double.infinity,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
+            child: Column(
+              children: [
+                if (width >= 600)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: TitleField(titleController: _titleController),
+                      ),
+                      const SizedBox(
+                        width: 24,
+                      ),
+                      Expanded(
+                        child: AmountField(amountController: _amountController),
+                      ),
+                    ],
+                  )
+                else
+                  TitleField(titleController: _titleController),
+                if (width >= 600)
+                  Row(
+                    children: [
+                      CategoryDropdown(
+                          selectedCategory: _selectedCategory,
+                          selectCategory: _selectCategory),
+                      const SizedBox(
+                        width: 24,
+                      ),
+                      Expanded(
+                        child: ExpenseDatePicker(selectDate: _selectDate),
+                      ),
+                    ],
+                  )
+                else
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AmountField(amountController: _amountController),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: ExpenseDatePicker(selectDate: _selectDate),
+                      ),
+                    ],
+                  ),
+                const SizedBox(
+                  height: 16,
+                ),
+                if (width >= 600)
+                  Row(
+                    children: [
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      ElevatedButton(
+                        onPressed: _submitExpenseData,
+                        child: const Text('Save Expense'),
+                      ),
+                    ],
+                  )
+                else
+                  Row(
+                    children: [
+                      CategoryDropdown(
+                          selectedCategory: _selectedCategory,
+                          selectCategory: _selectCategory),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      ElevatedButton(
+                        onPressed: _submitExpenseData,
+                        child: const Text('Save Expense'),
+                      ),
+                    ],
+                  )
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 16,
-          ),
-          Row(
-            children: [
-              CategoryDropdown(
-                  selectedCategory: _selectedCategory,
-                  selectCategory: _selectCategory),
-              const Spacer(),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                onPressed: _submitExpenseData,
-                child: const Text('Save Expense'),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
+        ),
+      );
+    });
   }
 }

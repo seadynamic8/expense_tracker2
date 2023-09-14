@@ -29,6 +29,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     final buckets = getBuckets();
     final maxTotalExpense = getMaxTotalExpense(buckets);
 
@@ -36,7 +37,7 @@ class Chart extends StatelessWidget {
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       width: double.infinity,
-      height: 180,
+      height: width < 600 ? 180 : double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         gradient: LinearGradient(
