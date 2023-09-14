@@ -7,6 +7,10 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeColorScheme = Theme.of(context).colorScheme;
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -18,7 +22,9 @@ class ChartBar extends StatelessWidget {
               shape: BoxShape.rectangle,
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(8)),
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.65),
+              color: isDarkMode
+                  ? themeColorScheme.secondary
+                  : themeColorScheme.primary.withOpacity(0.65),
             ),
           ),
         ),

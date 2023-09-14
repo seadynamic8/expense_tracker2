@@ -29,7 +29,11 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final themeColorScheme = Theme.of(context).colorScheme;
+    final mediaQuery = MediaQuery.of(context);
+    final width = mediaQuery.size.width;
+    final isDarkMode = mediaQuery.platformBrightness == Brightness.dark;
+
     final buckets = getBuckets();
     final maxTotalExpense = getMaxTotalExpense(buckets);
 
@@ -42,8 +46,8 @@ class Chart extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         gradient: LinearGradient(
           colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.3),
-            Theme.of(context).colorScheme.primary.withOpacity(0.0),
+            themeColorScheme.primary.withOpacity(0.3),
+            themeColorScheme.primary.withOpacity(0.0),
           ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
@@ -70,10 +74,9 @@ class Chart extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: Icon(
                           categoryIcons[bucket.category],
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.7),
+                          color: isDarkMode
+                              ? themeColorScheme.secondary
+                              : themeColorScheme.primary.withOpacity(0.7),
                         ),
                       ),
                     ))
